@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<main style="
+    min-height: calc(100vh - 70px);
+    padding: 60px 50px;
+    background: #f8fafc;
+">
+
+    <div style="
+        max-width: 1200px;
+        margin: 0 auto;
+    ">
+
+        <h1 style="
+            font-size: 34px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #0f172a;
+        ">
+            Auto Servis Dashboard
+        </h1>
+
+        <!-- CARDS -->
+        <div style="
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        ">
+
+            <!-- Автомобил -->
+            <a href="{% url 'auto-list' %}" style="
+                background: #ffffff;
+                border: 1px solid #e5e7eb;
+                padding: 40px;
+                border-radius: 8px;
+                text-decoration: none;
+                color: #0f172a;
+                transition: 0.25s;
+            ">
+                <h3 style="
+                    font-size: 20px;
+                    font-weight: 600;
+                    margin-bottom: 10px;
+                ">
+                    Автомобиллар
+                </h3>
+                <p style="
+                    font-size: 14px;
+                    color: #64748b;
+                ">
+                    Автомобиллар рўйхати ва бошқаруви
+                </p>
+            </a>
+
+            <!-- Хизматлар -->
+            <a href="{% url 'services-page' %}" style="
+                background: #ffffff;
+                border: 1px solid #e5e7eb;
+                padding: 40px;
+                border-radius: 8px;
+                text-decoration: none;
+                color: #0f172a;
+                transition: 0.25s;
+            ">
+                <h3 style="
+                    font-size: 20px;
+                    font-weight: 600;
+                    margin-bottom: 10px;
+                ">
+                    Хизматлар
+                </h3>
+                <p style="
+                    font-size: 14px;
+                    color: #64748b;
+                ">
+                    Хизмат турлари ва нархларни бошқариш
+                </p>
+            </a>
+
+            <!-- Хизматдан фойдаланиш -->
+            <a href="{% url 'car-services-page' %}" style="
+                background: #ffffff;
+                border: 1px solid #e5e7eb;
+                padding: 40px;
+                border-radius: 8px;
+                text-decoration: none;
+                color: #0f172a;
+                transition: 0.25s;
+            ">
+                <h3 style="
+                    font-size: 20px;
+                    font-weight: 600;
+                    margin-bottom: 10px;
+                ">
+                    Хизматдан фойдаланиш
+                </h3>
+                <p style="
+                    font-size: 14px;
+                    color: #64748b;
+                ">
+                    Мижозларга кўрсатилган хизматлар
+                </p>
+            </a>
+
+            <!-- Hisobot -->
+            <a href="{% url 'history-page' %}" style="
+                background: #ffffff;
+                border: 1px solid #e5e7eb;
+                padding: 40px;
+                border-radius: 8px;
+                text-decoration: none;
+                color: #0f172a;
+                transition: 0.25s;
+            ">
+                <h3 style="
+                    font-size: 20px;
+                    font-weight: 600;
+                    margin-bottom: 10px;
+                ">
+                    История
+                </h3>
+                <p style="
+                    font-size: 14px;
+                    color: #64748b;
+                ">
+                    Хизматлар тарихи
+                </p>
+            </a>
+
+        </div>
+    </div>
+
+</main>
+
+<style>
+    a:hover {
+        border-color: #2563eb;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        transform: translateY(-3px);
+    }
+
+    @media (max-width: 768px) {
+        main {
+            padding: 40px 20px;
+        }
+        div[style*="grid-template-columns"] {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}

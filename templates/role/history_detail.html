@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<main style="padding:50px; max-width:900px; margin:0 auto;">
+
+    <h1 style="text-align:center; color:#2563eb; margin-bottom:30px;">
+        {{ auto.customer_name }} — {{ auto.automobile_number }} Xizmatlari
+    </h1>
+
+    <!-- Orqaga tugmasi -->
+    <div style="margin-bottom:20px;">
+        <a href="{% url 'history-page' %}" style="
+            padding:10px 20px;
+            border-radius:8px;
+            border:2px solid #2563eb;
+            background:#ffffff;
+            color:#2563eb;
+            text-decoration:none;
+            font-weight:600;
+            transition:0.3s;
+        " onmouseover="this.style.background='#2563eb'; this.style.color='white';"
+           onmouseout="this.style.background='#ffffff'; this.style.color='#2563eb';">
+            🔙 Orqaga
+        </a>
+    </div>
+
+    {% if services %}
+        <table style="width:100%; border-collapse:collapse; text-align:left; margin-bottom:20px;">
+            <thead style="background:#2563eb; color:white;">
+                <tr>
+                    <th style="padding:12px; border:1px solid #e5e7eb;">Xizmat nomi</th>
+                    <th style="padding:12px; border:1px solid #e5e7eb;">Narxi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for service in services %}
+                <tr style="border-bottom:1px solid #e5e7eb;">
+                    <td style="padding:10px;">{{ service.service_name }}</td>
+                    <td style="padding:10px;">{{ service.service_price|intcomma }} so‘m</td>
+                </tr>
+                {% endfor %}
+                <tr style="font-weight:700; background:#f1f5f9;">
+                    <td style="padding:10px;">Jami</td>
+                    <td style="padding:10px;">{{ total|intcomma }} so‘m</td>
+                </tr>
+            </tbody>
+        </table>
+    {% else %}
+        <p style="text-align:center; color:#64748b;">Hozircha xizmatlar mavjud emas</p>
+    {% endif %}
+
+</main>
+{% endblock %}

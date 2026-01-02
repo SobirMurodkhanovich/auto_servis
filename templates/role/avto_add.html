@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main style="max-width:600px; margin:50px auto; padding:30px;
+             border:1px solid #ddd; border-radius:10px; background:#fafafa;">
+
+    <h2 style="margin-bottom:25px; text-align:center; color:#333;">
+        Автомобиль таҳрирлаш
+    </h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div style="margin-bottom:15px;">
+            <label style="display:block; margin-bottom:5px; color:#555;">
+                Мижоз исми
+            </label>
+            <input type="text" name="customer_name"
+                   value="{{ auto.customer_name }}"
+                   required
+                   style="
+                        width:100%;
+                        padding:10px 12px;
+                        border:1px solid #ccc;
+                        border-radius:6px;
+                   ">
+        </div>
+
+        <div style="margin-bottom:15px;">
+            <label style="display:block; margin-bottom:5px; color:#555;">
+                Телефон рақами
+            </label>
+            <input type="text" name="customer_phone_number"
+                   value="{{ auto.customer_phone_number }}"
+                   required
+                   style="
+                        width:100%;
+                        padding:10px 12px;
+                        border:1px solid #ccc;
+                        border-radius:6px;
+                   ">
+        </div>
+
+        <div style="margin-bottom:15px;">
+            <label style="display:block; margin-bottom:5px; color:#555;">
+                Автомобиль рақами
+            </label>
+            <input type="text" name="automobile_number"
+                   value="{{ auto.automobile_number }}"
+                   required
+                   style="
+                        width:100%;
+                        padding:10px 12px;
+                        border:1px solid #ccc;
+                        border-radius:6px;
+                   ">
+        </div>
+
+        <div style="margin-bottom:25px;">
+            <label style="display:block; margin-bottom:5px; color:#555;">
+                Пробег (км)
+            </label>
+            <input type="number" name="mileage"
+                   value="{{ auto.mileage }}"
+                   required
+                   style="
+                        width:100%;
+                        padding:10px 12px;
+                        border:1px solid #ccc;
+                        border-radius:6px;
+                   ">
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <button type="submit" style="
+                padding:10px 25px;
+                border:none;
+                border-radius:6px;
+                background:#ff3c00;
+                color:white;
+                cursor:pointer;
+            ">
+                Сақлаш
+            </button>
+
+            <a href="{% url 'auto-list' %}" style="
+                text-decoration:none;
+                color:#555;
+            ">
+                ← Орқага
+            </a>
+        </div>
+    </form>
+
+</main>
+{% endblock %}

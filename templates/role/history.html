@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<main style="padding:50px; max-width:1200px; margin:0 auto;">
+
+    <h1 style="text-align:center; color:#2563eb; margin-bottom:30px;">Хизматлар Тарихи</h1>
+
+    <!-- Qidiruv va Orqaga tugmasi -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; gap:10px;">
+        <form method="GET" style="flex:1; display:flex; gap:10px;">
+            <input type="text" name="q" value="{{ query }}" placeholder="Автомобиль рақами..."
+                   style="flex:1; padding:10px; border-radius:8px; border:1px solid #d1d5db;">
+            <button type="submit" style="
+                padding:10px 20px;
+                border:none;
+                border-radius:8px;
+                background:#2563eb;
+                color:white;
+                cursor:pointer;
+            ">Қидириш</button>
+        </form>
+
+        <a href="{% url 'employee-page' %}" style="
+            padding:10px 20px;
+            border-radius:8px;
+            border:2px solid #2563eb;
+            background:#ffffff;
+            color:#2563eb;
+            text-decoration:none;
+            font-weight:600;
+            transition:0.3s;
+            white-space:nowrap;
+        " onmouseover="this.style.background='#2563eb'; this.style.color='white';"
+           onmouseout="this.style.background='#ffffff'; this.style.color='#2563eb';">
+            🔙 Орқага
+        </a>
+    </div>
+
+    {% if autoservices %}
+        <table style="width:100%; border-collapse:collapse; text-align:left; margin-bottom:20px;">
+            <thead style="background:#2563eb; color:white;">
+                <tr>
+                    <th style="padding:12px; border:1px solid #e5e7eb;">Мижоз исми</th>
+                    <th style="padding:12px; border:1px solid #e5e7eb;">Телефон</th>
+                    <th style="padding:12px; border:1px solid #e5e7eb;">Авто рақам</th>
+                    <th style="padding:12px; border:1px solid #e5e7eb;">Пробег</th>
+                    <th style="padding:12px; border:1px solid #e5e7eb;">Қўшилган вақти</th>
+                    <th style="padding:12px; border:1px solid #e5e7eb;">Жами сумма</th>
+                    <th style="padding:12px; border:1px solid #e5e7eb;">Амаллар</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in autoservices %}
+                <tr style="border-bottom:1px solid #e5e7eb;">
+                    <td style="padding:10px;">{{ item.automobile.customer_name }}</td>
+                    <td style="padding:10px;">{{ item.automobile.customer_phone_number }}</td>
+                    <td style="padding:10px;">{{ item.automobile.automobile_number }}</td>
+                    <td style="padding:10px;">{{ item.automobile.mileage|intcomma }} км</td>
+                    <td style="padding:10px;">{{ item.created_at|date:"d.m.Y H:i" }}</td>
+                    <td style="padding:10px;">{{ item.total_sum|intcomma }} so‘m</td>
+                    <td style="padding:10px;">
+                        <a href="{% url 'history-detail' item.pk %}" style="
+                            padding:6px 12px;
+                            border-radius:6px;
+                            background:#2563eb;
+                            color:white;
+                            text-decoration:none;
+                        ">Кўрсатиш</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p style="text-align:center; color:#64748b;">Ҳозирча хизматлар мавжуд эмас</p>
+    {% endif %}
+
+</main>
+{% endblock %}

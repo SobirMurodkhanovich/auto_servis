@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Auto Service 706</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background: #f4f6f8;
+            color: #1f2933;
+            min-height: 100vh;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            height: 70px;
+            padding: 0 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .logo span {
+            color: #2563eb;
+        }
+
+        .nav-actions a {
+            padding: 9px 24px;
+            background: #2563eb;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .nav-actions a:hover {
+            background: #1d4ed8;
+        }
+
+        /* ===== MAIN ===== */
+        main {
+            padding: 80px 50px;
+        }
+
+        .hero {
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: #0f172a;
+        }
+
+        .hero-text h1 span {
+            color: #2563eb;
+        }
+
+        .hero-text p {
+            font-size: 17px;
+            line-height: 1.6;
+            color: #475569;
+            margin-bottom: 30px;
+        }
+
+        .hero-text a {
+            display: inline-block;
+            padding: 12px 32px;
+            background: #0f172a;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 4px;
+        }
+
+        .hero-text a:hover {
+            background: #020617;
+        }
+
+        /* ===== IMAGE ===== */
+        .hero-image {
+            height: 340px;
+            border-radius: 8px;
+            background: url("{% static 'photo/img_1.png' %}") center / cover no-repeat;
+            border: 1px solid #e5e7eb;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+            .hero-image {
+                height: 260px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            main {
+                padding: 50px 20px;
+            }
+            .navbar {
+                padding: 0 20px;
+            }
+            .hero-text h1 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">Auto Service <span>706</span></div>
+    <div class="nav-actions">
+        <a href="{% url 'login-page' %}">Kirish</a>
+    </div>
+</nav>
+
+<!-- MAIN -->
+<main>
+    {% block content %}
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Ishonchli <span>Auto Servis</span></h1>
+            <p>
+                Auto Service 706 — avtomobilingiz uchun professional
+                texnik xizmat, aniq diagnostika va sifat kafolati.
+            </p>
+            <a href="{% url 'login-page' %}">Tizimga kirish</a>
+        </div>
+
+        <div class="hero-image"></div>
+    </section>
+    {% endblock %}
+</main>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<main style="
+    min-height: calc(100vh - 70px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+">
+
+    <div style="
+        width: 100%;
+        max-width: 420px;
+        background: #ffffff;
+        padding: 45px 40px;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+    ">
+
+        <h1 style="
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #0f172a;
+        ">
+            Tizimga kirish
+        </h1>
+
+        <p style="
+            text-align: center;
+            font-size: 15px;
+            color: #64748b;
+            margin-bottom: 35px;
+        ">
+            Username va password orqali tizimga kiring
+        </p>
+
+        <form method="post" action="{% url 'login-page' %}">
+            {% csrf_token %}
+
+            <!-- USERNAME -->
+            <div style="margin-bottom: 22px;">
+                <label style="
+                    display: block;
+                    margin-bottom: 6px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: #334155;
+                ">
+                    Username
+                </label>
+                <input type="text" name="username" required
+                       style="
+                           width: 100%;
+                           padding: 12px 14px;
+                           font-size: 15px;
+                           border-radius: 4px;
+                           border: 1px solid #cbd5f5;
+                           outline: none;
+                       ">
+            </div>
+
+            <!-- PASSWORD -->
+            <div style="margin-bottom: 30px;">
+                <label style="
+                    display: block;
+                    margin-bottom: 6px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: #334155;
+                ">
+                    Password
+                </label>
+                <input type="password" name="password" required
+                       style="
+                           width: 100%;
+                           padding: 12px 14px;
+                           font-size: 15px;
+                           border-radius: 4px;
+                           border: 1px solid #cbd5f5;
+                           outline: none;
+                       ">
+            </div>
+
+            <!-- BUTTON -->
+            <button type="submit" style="
+                width: 100%;
+                padding: 12px;
+                font-size: 15px;
+                font-weight: 600;
+                background: #2563eb;
+                color: #ffffff;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            ">
+                Kirish
+            </button>
+
+            {% if form.errors %}
+            <p style="
+                margin-top: 18px;
+                text-align: center;
+                font-size: 14px;
+                color: #dc2626;
+            ">
+                Username yoki password noto‘g‘ri
+            </p>
+            {% endif %}
+        </form>
+
+    </div>
+</main>
+{% endblock %}

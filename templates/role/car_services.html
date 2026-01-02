@@ -1,0 +1,303 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<main style="
+    min-height: calc(100vh - 80px);
+    padding:60px 30px;
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    max-width:1200px;
+    margin:0 auto;
+">
+
+    <!-- ================= FORM ================= -->
+    <form id="auto-service-form" method="POST" style="
+        flex:1;
+        display:flex;
+        flex-direction:column;
+        gap:30px;
+        background:#ffffff;
+        padding:40px;
+        border-radius:16px;
+        border:1px solid #e5e7eb;
+        box-shadow:0 15px 35px rgba(0,0,0,0.1);
+    ">
+        {% csrf_token %}
+
+        <h1 style="
+            font-size:40px;
+            font-weight:700;
+            text-align:center;
+            color:#2563eb;
+        ">
+            Автомобилга хизмат бириктириш
+        </h1>
+
+        <!-- Avtomobil -->
+        <div>
+            <label style="font-size:18px;font-weight:600;">Автомобилни танланг</label>
+            <select name="automobile" id="automobile-select" required style="
+                width:100%;
+                margin-top:10px;
+                padding:14px;
+                border-radius:10px;
+                border:1px solid #d1d5db;
+            ">
+                <option value="">-- Автомобил танланг --</option>
+                {% for auto in autos %}
+                <option value="{{ auto.id }}" data-name="{{ auto.customer_name }}" data-number="{{ auto.automobile_number }}">
+                    {{ auto.customer_name }} — {{ auto.automobile_number }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Xizmatlar -->
+        <div>
+            <label style="font-size:18px;font-weight:600;">Хизматларни танланг</label>
+            <div class="services-grid">
+                {% for service in services %}
+                <label class="service-card">
+                    <input
+                        type="checkbox"
+                        name="services"
+                        value="{{ service.id }}"
+                        data-name="{{ service.service_name }}"
+                        data-price="{{ service.service_price }}"
+                        class="service-checkbox"
+                    >
+                    <div class="service-info">
+                        <span class="service-name">{{ service.service_name }}</span>
+                        <span class="service-price">{{ service.service_price }} so‘m</span>
+                    </div>
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Biriktirish + PDF tugmasi -->
+        <div style="display:flex;gap:20px;justify-content:center;">
+            <button type="submit" id="save-and-pdf" class="btn-primary">📄 Сақлаш ва ПДФ юклаш</button>
+            <a href="{% url 'employee-page' %}" class="btn-secondary">Орқага</a>
+        </div>
+    </form>
+
+    <!-- ================= TANLANGAN XIZMATLAR ================= -->
+    <div style="
+        width:350px;
+        background:#fdfdfd;
+        border:1px solid #e5e7eb;
+        border-radius:16px;
+        padding:30px;
+        box-shadow:0 10px 25px rgba(0,0,0,0.08);
+        position:sticky;
+        top:100px;
+        height:fit-content;
+        font-family:'Courier New', monospace;
+    ">
+        <h3 style="
+            font-size:22px;
+            font-weight:700;
+            margin-bottom:20px;
+            color:#1e293b;
+            text-align:center;
+        ">
+            Танланган хизматлар
+        </h3>
+
+        <ul id="selected-services" style="
+            list-style:none;
+            padding:0;
+            margin:0 0 20px 0;
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+        ">
+            <li style="color:#64748b;font-size:14px;">
+                Ҳозирча танланмаган
+            </li>
+        </ul>
+
+        <hr style="margin:20px 0;">
+
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            font-size:20px;
+            font-weight:700;
+            color:#2563eb;
+        ">
+            <span>Жами:</span>
+            <span><span id="total-sum">0</span> so‘m</span>
+        </div>
+    </div>
+
+</main>
+
+<style>
+.services-grid {
+    margin-top:15px;
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap:16px;
+}
+
+.service-card {
+    display:flex;
+    gap:12px;
+    padding:14px;
+    height:90px;
+    border-radius:14px;
+    border:1px solid #d1d5db;
+    background:#f9fafb;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.service-card input {
+    width:20px;
+    height:20px;
+    accent-color:#2563eb;
+}
+
+.service-info {
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.service-name {
+    font-size:15px;
+    font-weight:600;
+}
+
+.service-price {
+    font-size:14px;
+    color:#2563eb;
+}
+
+.service-card:hover {
+    border-color:#2563eb;
+    box-shadow:0 6px 18px rgba(37,99,235,0.25);
+}
+
+.service-card:has(input:checked) {
+    background:#eff6ff;
+    border-color:#2563eb;
+}
+
+.btn-primary {
+    padding:16px 36px;
+    font-size:18px;
+    border-radius:30px;
+    border:none;
+    background:#2563eb;
+    color:white;
+}
+
+.btn-secondary {
+    padding:16px 36px;
+    border-radius:30px;
+    border:2px solid #2563eb;
+    color:#2563eb;
+    text-decoration:none;
+}
+
+@media(max-width:1000px){
+    main {
+        flex-direction:column;
+    }
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const { jsPDF } = window.jspdf;
+
+const form = document.getElementById("auto-service-form");
+const checkboxes = document.querySelectorAll(".service-checkbox");
+const listEl = document.getElementById("selected-services");
+const totalEl = document.getElementById("total-sum");
+const autoSelect = document.getElementById("automobile-select");
+
+function updateSummary() {
+    listEl.innerHTML = "";
+    let total = 0;
+    let hasItem = false;
+
+    checkboxes.forEach(cb => {
+        if (cb.checked) {
+            hasItem = true;
+            const name = cb.dataset.name;
+            const price = parseInt(cb.dataset.price);
+            total += price;
+
+            const li = document.createElement("li");
+            li.style.display = "flex";
+            li.style.justifyContent = "space-between";
+            li.style.fontSize = "15px";
+            li.innerHTML = `<span>${name}</span><strong>${price.toLocaleString()} so‘m</strong>`;
+            listEl.appendChild(li);
+        }
+    });
+
+    if (!hasItem) {
+        listEl.innerHTML = `<li style="color:#64748b;font-size:14px;">Hozircha tanlanmagan</li>`;
+    }
+
+    totalEl.textContent = total.toLocaleString();
+}
+
+checkboxes.forEach(cb => cb.addEventListener("change", updateSummary));
+
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    fetch("{% url 'car-services-page' %}", {
+        method: "POST",
+        body: formData,
+        headers: {
+            "X-CSRFToken": formData.get("csrfmiddlewaretoken")
+        }
+    }).then(response => response.ok ? response.text() : Promise.reject("Xatolik"))
+      .then(() => {
+          // PDF yaratish
+          const selectedAuto = autoSelect.options[autoSelect.selectedIndex];
+          const autoName = selectedAuto.dataset.name || "Avtomobil";
+          const autoNumber = selectedAuto.dataset.number || "0000";
+          const today = new Date();
+          const dateStr = today.toLocaleDateString();
+
+          const doc = new jsPDF();
+          doc.setFont("Courier");
+          doc.setFontSize(18);
+          doc.text("Auto Service 706", 105, 20, null, null, "center");
+          doc.setFontSize(14);
+          doc.text(`Sana: ${dateStr}`, 20, 35);
+          doc.text(`Avtomobil: ${autoName} — ${autoNumber}`, 20, 45);
+          doc.text("Tanlangan xizmatlar:", 20, 60);
+
+          let y = 70;
+          checkboxes.forEach(cb => {
+              if (cb.checked) {
+                  const name = cb.dataset.name;
+                  const price = parseInt(cb.dataset.price).toLocaleString();
+                  doc.text(`${name} - ${price} so‘m`, 20, y);
+                  y += 8;
+              }
+          });
+
+          doc.setFontSize(16);
+          doc.text(`Jami: ${totalEl.textContent} so'm`, 20, y + 10);
+
+          const filename = `Chek_${autoNumber}.pdf`;
+          doc.save(filename);
+      })
+      .catch(err => alert(err));
+});
+</script>
+{% endblock %}
