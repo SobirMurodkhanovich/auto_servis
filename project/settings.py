@@ -22,9 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-dyl0^t4(yeyz$#*xdrw$s#xhp9$v^9t03vnr^f7*!uu0)msmhi'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS = ['*']
-
+DEBUG = False
+ALLOWED_HOSTS = ['https://auto-servis-3.onrender.com']
+CSRF_TRUSTED_ORIGINS = [
+    "https://auto-servis-3.onrender.com",
+]
 # Application definition
 
 INSTALLED_APPS = [
