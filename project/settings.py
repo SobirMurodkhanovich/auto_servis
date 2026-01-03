@@ -23,7 +23,7 @@ SECRET_KEY = 'django-insecure-dyl0^t4(yeyz$#*xdrw$s#xhp9$v^9t03vnr^f7*!uu0)msmhi
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = ['https://auto-servis-3.onrender.com']
+ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = [
     "https://auto-servis-3.onrender.com",
 ]
