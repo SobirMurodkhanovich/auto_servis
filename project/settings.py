@@ -23,7 +23,7 @@ SECRET_KEY = 'django-insecure-dyl0^t4(yeyz$#*xdrw$s#xhp9$v^9t03vnr^f7*!uu0)msmhi
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = ['*']  # yoki os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -102,7 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'ASIA/TASHKENT'
+TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
 
