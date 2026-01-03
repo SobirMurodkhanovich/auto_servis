@@ -27,6 +27,8 @@ ALLOWED_HOSTS = ['https://auto-servis-3.onrender.com']
 CSRF_TRUSTED_ORIGINS = [
     "https://auto-servis-3.onrender.com",
 ]
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 # Application definition
 
 INSTALLED_APPS = [
